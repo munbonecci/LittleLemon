@@ -5,6 +5,7 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -12,11 +13,13 @@ import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.runtime.*
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -26,15 +29,32 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
+import androidx.room.Room
+import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
+import com.bumptech.glide.integration.compose.GlideImage
 import com.munbonecci.littlelemon.ui.theme.*
 
 @Composable
 fun Home(navController: NavHostController) {
+    val context = LocalContext.current
+
+    val database by lazy {
+        Room.databaseBuilder(context.applicationContext, AppDatabase::class.java, "database")
+            .build()
+    }
+    val databaseMenuItems by database.menuItemDao().getAll().observeAsState(emptyList())
+    var orderMenuItems by remember { mutableStateOf(false) }
+    var menuItems = if (orderMenuItems) {
+        databaseMenuItems.sortedBy { it.title }
+    } else {
+        databaseMenuItems
+    }
+
     Column {
         Header(navController)
         HeroSection(onPhraseSelected = {})
         MenuCategories(onItemClick = {})
-        MenuItems()
+        MenuItems(menuItems, onItemPressed = {})
     }
 }
 
@@ -167,12 +187,56 @@ fun MenuCategories(onItemClick: (String) -> Unit) {
                 }
             }
         }
+        Divider(color = Gray, thickness = 1.dp, modifier = Modifier.padding(top = 24.dp))
     }
 }
 
+@OptIn(ExperimentalGlideComposeApi::class)
 @Composable
-fun MenuItems() {
-
+fun MenuItems(menuItems: List<MenuItemRoom>, onItemPressed: (MenuItemRoom) -> Unit) {
+    LazyColumn {
+        items(menuItems) { menuItem ->
+            Column(modifier = Modifier
+                .clickable { onItemPressed(menuItem) }) {
+                Row(modifier = Modifier.padding(top = 18.dp, start = 18.dp, end = 18.dp)) {
+                    Column {
+                        Text(
+                            text = menuItem.title,
+                            fontSize = 20.sp,
+                            fontWeight = FontWeight.Bold,
+                            color = Color.Black
+                        )
+                        Text(
+                            text = menuItem.description,
+                            fontSize = 16.sp,
+                            color = PrimaryGray,
+                            modifier = Modifier
+                                .padding(bottom = 18.dp, end = 8.dp, top = 8.dp)
+                                .fillMaxWidth(0.6f),
+                            maxLines = 2,
+                        )
+                        Text(
+                            text = "$%.2f".format(menuItem.price),
+                            color = PrimaryGray,
+                            fontSize = 18.sp,
+                            fontWeight = FontWeight.Bold,
+                        )
+                    }
+                    GlideImage(
+                        model = menuItem.image,
+                        contentDescription = menuItem.title,
+                        alignment = Alignment.TopCenter,
+                        modifier = Modifier.clip(RoundedCornerShape(10.dp))
+                    )
+                }
+                Divider(
+                    color = LightGray,
+                    thickness = 1.dp,
+                    modifier = Modifier.padding(top = 12.dp)
+                )
+            }
+        }
+    }
 }
 
 @Composable
