@@ -3,7 +3,10 @@ package com.munbonecci.littlelemon
 import android.content.res.Configuration
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
@@ -17,6 +20,7 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -28,7 +32,9 @@ import com.munbonecci.littlelemon.ui.theme.*
 fun Home(navController: NavHostController) {
     Column {
         Header(navController)
-        HeroSection()
+        HeroSection(onPhraseSelected = {})
+        MenuCategories(onItemClick = {})
+        MenuItems()
     }
 }
 
@@ -62,8 +68,9 @@ private fun Header(navController: NavHostController) {
 }
 
 @Composable
-fun HeroSection() {
+fun HeroSection(onPhraseSelected: (String) -> Unit) {
     var searchPhrase by remember { mutableStateOf("") }
+    onPhraseSelected(searchPhrase)
 
     Column(
         modifier = Modifier
@@ -119,9 +126,9 @@ fun HeroSection() {
             },
             modifier = Modifier.fillMaxWidth(),
             colors = TextFieldDefaults.textFieldColors(
-                backgroundColor = Gray,
-                focusedIndicatorColor = Gray,
-                unfocusedIndicatorColor = Gray,
+                backgroundColor = LightGray,
+                focusedIndicatorColor = LightGray,
+                unfocusedIndicatorColor = LightGray,
             ),
             label = {
                 Text(
@@ -130,6 +137,42 @@ fun HeroSection() {
                 )
             })
     }
+}
+
+@Composable
+fun MenuCategories(onItemClick: (String) -> Unit) {
+    val categories = listOf("Starters", "Mains", "Desserts", "Drinks")
+    Column(modifier = Modifier.padding(16.dp)) {
+        Text(
+            text = stringResource(id = R.string.order_for_delivery),
+            modifier = Modifier.padding(top = 8.dp, bottom = 8.dp),
+            fontWeight = FontWeight.Bold
+        )
+        LazyRow {
+            items(categories) { category ->
+                Card(
+                    modifier = Modifier
+                        .padding(8.dp)
+                        .clickable { onItemClick(category) },
+                    shape = RoundedCornerShape(26.dp),
+                    backgroundColor = LightGray
+                ) {
+                    Text(
+                        text = category,
+                        textAlign = TextAlign.Center,
+                        color = DarkGray,
+                        modifier = Modifier.padding(8.dp),
+                        fontWeight = FontWeight.Bold
+                    )
+                }
+            }
+        }
+    }
+}
+
+@Composable
+fun MenuItems() {
+
 }
 
 @Composable

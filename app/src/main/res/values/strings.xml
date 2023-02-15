@@ -18,4 +18,5 @@
     <string name="short_description">We are a family owned Mediterranean restaurant, focused on traditional recipes served with a modern twist.</string>
     <string name="search">Search</string>
     <string name="enter_search_phrase">Enter search phrase</string>
+    <string name="order_for_delivery">ORDER FOR DELIVERY!</string>
 </resources>
