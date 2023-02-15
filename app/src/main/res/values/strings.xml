@@ -3,4 +3,12 @@
     <string name="on_boarding_screen">OnBoarding screen</string>
     <string name="home_screen">Home screen</string>
     <string name="profile_screen">Profile screen</string>
+    <string name="on_boarding_header">Let\'s get to know you</string>
+    <string name="personal_information">Personal information</string>
+    <string name="first_name">First name</string>
+    <string name="last_name">Last name</string>
+    <string name="email">Email</string>
+    <string name="registration_success">Registration successful!</string>
+    <string name="registration_failed">Registration unsuccessful. Please enter all data.</string>
+    <string name="register">Register</string>
 </resources>

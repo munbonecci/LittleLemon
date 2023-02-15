@@ -1,5 +1,6 @@
 package com.munbonecci.littlelemon
 
+import android.content.res.Configuration
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -39,8 +40,9 @@ class MainActivity : ComponentActivity() {
     }
 }
 
-@Preview(showBackground = true)
 @Composable
+@Preview(name = Constants.LIGHT_MODE)
+@Preview(name = Constants.DARK_MODE, uiMode = Configuration.UI_MODE_NIGHT_YES)
 fun DefaultPreview() {
     LittleLemonTheme {
         val navController = rememberNavController()

@@ -17,6 +17,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.style.TextAlign
@@ -26,10 +27,12 @@ import androidx.compose.ui.unit.sp
 import androidx.core.content.edit
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
+import com.munbonecci.littlelemon.Constants.DARK_MODE
 import com.munbonecci.littlelemon.Constants.EMAIL_PREF
 import com.munbonecci.littlelemon.Constants.FIRST_NAME_PREF
 import com.munbonecci.littlelemon.Constants.IS_REGISTERED_PREF
 import com.munbonecci.littlelemon.Constants.LAST_NAME_PREF
+import com.munbonecci.littlelemon.Constants.LIGHT_MODE
 import com.munbonecci.littlelemon.Constants.PREF_NAME
 import com.munbonecci.littlelemon.ui.theme.DarkGray
 import com.munbonecci.littlelemon.ui.theme.LittleLemonTheme
@@ -55,7 +58,7 @@ fun OnBoarding(navController: NavHostController) {
     ) {
         Image(
             painter = painterResource(id = R.drawable.logo_),
-            contentDescription = "logo",
+            contentDescription = stringResource(id = R.string.app_name),
             modifier = Modifier
                 .align(Alignment.CenterHorizontally)
                 .size(140.dp),
@@ -67,7 +70,7 @@ fun OnBoarding(navController: NavHostController) {
                 .fillMaxWidth()
         ) {
             Text(
-                text = "Let's get to know you",
+                text = stringResource(id = R.string.on_boarding_header),
                 modifier = Modifier
                     .weight(1f)
                     .padding(55.dp),
@@ -83,14 +86,14 @@ fun OnBoarding(navController: NavHostController) {
             verticalArrangement = Arrangement.SpaceBetween
         ) {
             Text(
-                text = "Personal information",
+                text = stringResource(id = R.string.personal_information),
                 fontWeight = FontWeight.Bold,
                 modifier = Modifier.padding(top = 8.dp)
             )
             OutlinedTextField(
                 value = firstName,
                 onValueChange = { firstName = it },
-                label = { Text(text = "First name") },
+                label = { Text(text = stringResource(id = R.string.first_name)) },
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(top = 16.dp),
@@ -106,7 +109,7 @@ fun OnBoarding(navController: NavHostController) {
             OutlinedTextField(
                 value = lastName,
                 onValueChange = { lastName = it },
-                label = { Text(text = "Last name") },
+                label = { Text(text = stringResource(id = R.string.last_name)) },
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(top = 16.dp),
@@ -122,7 +125,7 @@ fun OnBoarding(navController: NavHostController) {
             OutlinedTextField(
                 value = email,
                 onValueChange = { email = it },
-                label = { Text(text = "Email") },
+                label = { Text(text = stringResource(id = R.string.email)) },
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(top = 16.dp, bottom = 16.dp),
@@ -140,7 +143,7 @@ fun OnBoarding(navController: NavHostController) {
         OutlinedButton(
             onClick = {
                 if (firstName.isNotBlank() && lastName.isNotBlank() && email.isNotBlank()) {
-                    showMessage("Registration successful!", context)
+                    showMessage(context.getString(R.string.registration_success), context)
                     sharedPreferences.edit(commit = true) {
                         putBoolean(IS_REGISTERED_PREF, true)
                     }
@@ -155,7 +158,7 @@ fun OnBoarding(navController: NavHostController) {
                     }
                     navController.navigate(HomeScreen.route)
                 } else {
-                    showMessage("Registration unsuccessful. Please enter all data.", context)
+                    showMessage(context.getString(R.string.registration_failed), context)
                 }
             }, modifier = Modifier
                 .fillMaxWidth()
@@ -167,7 +170,7 @@ fun OnBoarding(navController: NavHostController) {
             border = BorderStroke(1.dp, Color.Black),
             shape = RoundedCornerShape(16)
         ) {
-            Text(text = "Register")
+            Text(text = stringResource(id = R.string.register))
         }
     }
 }
@@ -179,8 +182,8 @@ private fun showMessage(message: String, context: Context) {
 }
 
 @Composable
-@Preview(name = "light_mode")
-@Preview(name = "dark_mode", uiMode = Configuration.UI_MODE_NIGHT_YES)
+@Preview(name = LIGHT_MODE)
+@Preview(name = DARK_MODE, uiMode = Configuration.UI_MODE_NIGHT_YES)
 fun OnBoardingPreview() {
     LittleLemonTheme {
         Surface {

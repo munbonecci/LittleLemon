@@ -1,17 +1,21 @@
 package com.munbonecci.littlelemon
 
+import com.munbonecci.littlelemon.Constants.HOME_SCREEN
+import com.munbonecci.littlelemon.Constants.ON_BOARDING_SCREEN
+import com.munbonecci.littlelemon.Constants.PROFILE_SCREEN
+
 interface Destinations {
     val route: String
 }
 
 object OnBoardingScreen: Destinations {
-    override val route = "OnBoarding screen"
+    override val route = ON_BOARDING_SCREEN
 }
 
 object HomeScreen: Destinations {
-    override val route = "Home screen"
+    override val route = HOME_SCREEN
 }
 
 object ProfileScreen: Destinations {
-    override val route = "Profile screen"
+    override val route = PROFILE_SCREEN
 }
