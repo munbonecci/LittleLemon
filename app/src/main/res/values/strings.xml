@@ -11,4 +11,6 @@
     <string name="registration_success">Registration successful!</string>
     <string name="registration_failed">Registration unsuccessful. Please enter all data.</string>
     <string name="register">Register</string>
+    <string name="log_out">Log out</string>
+    <string name="go_to_profile_screen">Go to profile screen</string>
 </resources>
