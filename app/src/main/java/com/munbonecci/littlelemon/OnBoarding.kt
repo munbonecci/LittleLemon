@@ -23,8 +23,14 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.core.content.edit
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
+import com.munbonecci.littlelemon.Constants.EMAIL_PREF
+import com.munbonecci.littlelemon.Constants.FIRST_NAME_PREF
+import com.munbonecci.littlelemon.Constants.IS_REGISTERED_PREF
+import com.munbonecci.littlelemon.Constants.LAST_NAME_PREF
+import com.munbonecci.littlelemon.Constants.PREF_NAME
 import com.munbonecci.littlelemon.ui.theme.DarkGray
 import com.munbonecci.littlelemon.ui.theme.LittleLemonTheme
 import com.munbonecci.littlelemon.ui.theme.PrimaryGray
@@ -42,6 +48,7 @@ fun OnBoarding(navController: NavHostController) {
         mutableStateOf("")
     }
     val context = LocalContext.current
+    val sharedPreferences = context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE)
 
     Column(
         Modifier.fillMaxHeight()
@@ -134,6 +141,18 @@ fun OnBoarding(navController: NavHostController) {
             onClick = {
                 if (firstName.isNotBlank() && lastName.isNotBlank() && email.isNotBlank()) {
                     showMessage("Registration successful!", context)
+                    sharedPreferences.edit(commit = true) {
+                        putBoolean(IS_REGISTERED_PREF, true)
+                    }
+                    sharedPreferences.edit(commit = true) {
+                        putString(FIRST_NAME_PREF, firstName)
+                    }
+                    sharedPreferences.edit(commit = true) {
+                        putString(LAST_NAME_PREF, lastName)
+                    }
+                    sharedPreferences.edit(commit = true) {
+                        putString(EMAIL_PREF, email)
+                    }
                     navController.navigate(HomeScreen.route)
                 } else {
                     showMessage("Registration unsuccessful. Please enter all data.", context)

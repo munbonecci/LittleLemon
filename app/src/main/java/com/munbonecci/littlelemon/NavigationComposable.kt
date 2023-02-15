@@ -6,15 +6,22 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 
 @Composable
-fun NavigationComposable(navController: NavHostController) {
-    NavHost(navController = navController, startDestination = OnBoardingScreen.route) {
-        composable(OnBoardingScreen.route){
+fun NavigationComposable(navController: NavHostController, isRegistered: Boolean) {
+
+    val startDestinationRoute = if (isRegistered) {
+        HomeScreen.route
+    } else {
+        OnBoardingScreen.route
+    }
+
+    NavHost(navController = navController, startDestination = startDestinationRoute) {
+        composable(OnBoardingScreen.route) {
             OnBoarding(navController)
         }
-        composable(HomeScreen.route){
+        composable(HomeScreen.route) {
             Home(navController)
         }
-        composable(ProfileScreen.route){
+        composable(ProfileScreen.route) {
             Profile(navController)
         }
     }

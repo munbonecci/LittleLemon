@@ -10,20 +10,29 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.compose.rememberNavController
+import com.munbonecci.littlelemon.Constants.IS_REGISTERED_PREF
+import com.munbonecci.littlelemon.Constants.PREF_NAME
 import com.munbonecci.littlelemon.ui.theme.LittleLemonTheme
 
 class MainActivity : ComponentActivity() {
+
+    private val sharedPreferences by lazy {
+        getSharedPreferences(PREF_NAME, MODE_PRIVATE)
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        val isRegistered = sharedPreferences.getBoolean(IS_REGISTERED_PREF, false)
+
         setContent {
             LittleLemonTheme {
-                // A surface container using the 'background' color from the theme
                 Surface(
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colors.background
                 ) {
                     val navController = rememberNavController()
-                    NavigationComposable(navController)
+                    NavigationComposable(navController, isRegistered)
                 }
             }
         }
@@ -35,6 +44,6 @@ class MainActivity : ComponentActivity() {
 fun DefaultPreview() {
     LittleLemonTheme {
         val navController = rememberNavController()
-        NavigationComposable(navController)
+        NavigationComposable(navController, false)
     }
 }
