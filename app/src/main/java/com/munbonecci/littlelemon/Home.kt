@@ -9,6 +9,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Search
@@ -23,6 +24,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -44,6 +46,8 @@ fun Home(navController: NavHostController) {
     }
     val databaseMenuItems by database.menuItemDao().getAll().observeAsState(emptyList())
     var orderMenuItems by remember { mutableStateOf(false) }
+    var searchPhrase by remember { mutableStateOf("") }
+    var categorySelected by remember { mutableStateOf("") }
     var menuItems = if (orderMenuItems) {
         databaseMenuItems.sortedBy { it.title }
     } else {
@@ -52,8 +56,26 @@ fun Home(navController: NavHostController) {
 
     Column {
         Header(navController)
-        HeroSection(onPhraseSelected = {})
-        MenuCategories(onItemClick = {})
+        HeroSection(onPhraseSelected = {phrase ->
+            searchPhrase = phrase
+        })
+        MenuCategories(onItemClick = {category ->
+            categorySelected = category
+        })
+        if (searchPhrase.isNotEmpty()) {
+            menuItems = databaseMenuItems.filter {
+                it.title.contains(searchPhrase, ignoreCase = true)
+            }
+        }
+        if (categorySelected.isNotEmpty()) {
+            if (categorySelected == "All"){
+                orderMenuItems = false
+            } else {
+                menuItems = databaseMenuItems.filter {
+                    it.category.contains(categorySelected, ignoreCase = true)
+                }
+            }
+        }
         MenuItems(menuItems, onItemPressed = {})
     }
 }
@@ -90,7 +112,6 @@ private fun Header(navController: NavHostController) {
 @Composable
 fun HeroSection(onPhraseSelected: (String) -> Unit) {
     var searchPhrase by remember { mutableStateOf("") }
-    onPhraseSelected(searchPhrase)
 
     Column(
         modifier = Modifier
@@ -150,6 +171,9 @@ fun HeroSection(onPhraseSelected: (String) -> Unit) {
                 focusedIndicatorColor = LightGray,
                 unfocusedIndicatorColor = LightGray,
             ),
+            keyboardOptions = KeyboardOptions(
+                imeAction = ImeAction.Done,
+            ),
             label = {
                 Text(
                     text = stringResource(id = R.string.enter_search_phrase),
@@ -157,11 +181,15 @@ fun HeroSection(onPhraseSelected: (String) -> Unit) {
                 )
             })
     }
+
+    if (searchPhrase.isNotEmpty()) {
+        onPhraseSelected(searchPhrase)
+    }
 }
 
 @Composable
 fun MenuCategories(onItemClick: (String) -> Unit) {
-    val categories = listOf("Starters", "Mains", "Desserts", "Drinks")
+    val categories = listOf("Starters", "Mains", "Desserts", "Drinks", "All")
     Column(modifier = Modifier.padding(16.dp)) {
         Text(
             text = stringResource(id = R.string.order_for_delivery),
