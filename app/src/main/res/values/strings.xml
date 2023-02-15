@@ -13,4 +13,9 @@
     <string name="register">Register</string>
     <string name="log_out">Log out</string>
     <string name="go_to_profile_screen">Go to profile screen</string>
+    <string name="restaurant_name">Little Lemon</string>
+    <string name="restaurant_city">Chicago</string>
+    <string name="short_description">We are a family owned Mediterranean restaurant, focused on traditional recipes served with a modern twist.</string>
+    <string name="search">Search</string>
+    <string name="enter_search_phrase">Enter search phrase</string>
 </resources>

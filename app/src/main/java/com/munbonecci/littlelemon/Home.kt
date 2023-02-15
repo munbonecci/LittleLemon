@@ -2,34 +2,33 @@ package com.munbonecci.littlelemon
 
 import android.content.res.Configuration
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
-import androidx.compose.material.IconButton
-import androidx.compose.material.Surface
-import androidx.compose.runtime.Composable
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.*
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Search
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
-import com.munbonecci.littlelemon.ui.theme.LittleLemonTheme
+import com.munbonecci.littlelemon.ui.theme.*
 
 @Composable
 fun Home(navController: NavHostController) {
     Column {
         Header(navController)
-        Spacer(modifier = Modifier.height(56.dp))
-        Image(
-            painter = painterResource(id = R.drawable.logo_),
-            contentDescription = stringResource(id = R.string.app_name),
-            modifier = Modifier
-                .align(Alignment.CenterHorizontally)
-                .size(140.dp),
-            contentScale = ContentScale.FillWidth,
-        )
+        HeroSection()
     }
 }
 
@@ -40,6 +39,13 @@ private fun Header(navController: NavHostController) {
             .fillMaxWidth()
             .padding(16.dp)
     ) {
+        Image(
+            painter = painterResource(id = R.drawable.logo_),
+            contentDescription = stringResource(id = R.string.app_name),
+            modifier = Modifier
+                .align(Alignment.Center)
+                .padding(start = 70.dp, end = 70.dp),
+        )
         IconButton(
             enabled = true, onClick = {
                 navController.navigate(ProfileScreen.route)
@@ -52,6 +58,77 @@ private fun Header(navController: NavHostController) {
                 contentDescription = stringResource(R.string.go_to_profile_screen),
             )
         }
+    }
+}
+
+@Composable
+fun HeroSection() {
+    var searchPhrase by remember { mutableStateOf("") }
+
+    Column(
+        modifier = Modifier
+            .background(color = PrimaryGray)
+            .padding(start = 12.dp, end = 12.dp, bottom = 16.dp)
+    ) {
+        Row(
+            modifier = Modifier
+                .padding(top = 18.dp)
+        ) {
+            Column {
+                Text(
+                    text = stringResource(id = R.string.restaurant_name),
+                    fontSize = 40.sp,
+                    fontWeight = FontWeight.Bold,
+                    color = Yellow
+                )
+                Text(
+                    text = stringResource(id = R.string.restaurant_city),
+                    fontSize = 24.sp,
+                    color = White
+                )
+                Text(
+                    text = stringResource(id = R.string.short_description),
+                    color = White,
+                    fontSize = 18.sp,
+                    modifier = Modifier
+                        .padding(bottom = 28.dp, end = 8.dp, top = 24.dp)
+                        .fillMaxWidth(0.6f)
+                )
+            }
+            Column(modifier = Modifier.padding(top = 48.dp)) {
+                Image(
+                    painter = painterResource(id = R.drawable.hero_image),
+                    contentDescription = stringResource(id = R.string.app_name),
+                    modifier = Modifier
+                        .clip(RoundedCornerShape(20.dp))
+                        .size(170.dp),
+                    contentScale = ContentScale.FillWidth
+                )
+            }
+        }
+        Spacer(modifier = Modifier.height(8.dp))
+        OutlinedTextField(
+            value = searchPhrase,
+            onValueChange = { searchPhrase = it },
+            leadingIcon = {
+                Icon(
+                    imageVector = Icons.Filled.Search,
+                    tint = Color.Black,
+                    contentDescription = stringResource(R.string.search),
+                )
+            },
+            modifier = Modifier.fillMaxWidth(),
+            colors = TextFieldDefaults.textFieldColors(
+                backgroundColor = Gray,
+                focusedIndicatorColor = Gray,
+                unfocusedIndicatorColor = Gray,
+            ),
+            label = {
+                Text(
+                    text = stringResource(id = R.string.enter_search_phrase),
+                    color = DarkGray
+                )
+            })
     }
 }
 
