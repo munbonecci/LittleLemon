@@ -2,7 +2,6 @@ package com.munbonecci.littlelemon
 
 import android.content.Context
 import android.content.res.Configuration
-import android.widget.Toast
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
@@ -152,12 +151,6 @@ fun Profile(navController: NavHostController) {
             Text(text = stringResource(id = R.string.log_out))
         }
     }
-}
-
-private fun showMessage(message: String, context: Context) {
-    Toast.makeText(
-        context, message, Toast.LENGTH_SHORT
-    ).show()
 }
 
 @Composable
