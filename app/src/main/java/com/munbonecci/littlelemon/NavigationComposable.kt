@@ -8,11 +8,7 @@ import androidx.navigation.compose.composable
 @Composable
 fun NavigationComposable(navController: NavHostController, isRegistered: Boolean) {
 
-    val startDestinationRoute = if (isRegistered) {
-        HomeScreen.route
-    } else {
-        OnBoardingScreen.route
-    }
+    val startDestinationRoute = if (isRegistered) HomeScreen.route else OnBoardingScreen.route
 
     NavHost(navController = navController, startDestination = startDestinationRoute) {
         composable(OnBoardingScreen.route) {

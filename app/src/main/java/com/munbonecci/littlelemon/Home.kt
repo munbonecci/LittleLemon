@@ -17,7 +17,6 @@ import com.munbonecci.littlelemon.ui.theme.LittleLemonTheme
 @Composable
 fun Home(navController: NavHostController) {
     val context = LocalContext.current
-
     val database by lazy {
         Room.databaseBuilder(context.applicationContext, AppDatabase::class.java, DATABASE_NAME)
             .build()
@@ -26,18 +25,15 @@ fun Home(navController: NavHostController) {
     var orderMenuItems by remember { mutableStateOf(false) }
     var searchPhrase by remember { mutableStateOf("") }
     var categorySelected by remember { mutableStateOf("") }
-    var menuItems = if (orderMenuItems) {
-        databaseMenuItems.sortedBy { it.title }
-    } else {
-        databaseMenuItems
-    }
+    var menuItems =
+        if (orderMenuItems) databaseMenuItems.sortedBy { it.title } else databaseMenuItems
 
     Column {
         HomeHeader(navController)
-        HeroSection(onPhraseSelected = {phrase ->
+        HeroSection(onPhraseSelected = { phrase ->
             searchPhrase = phrase
         })
-        MenuCategories(onItemClick = {category ->
+        MenuCategories(onItemClick = { category ->
             categorySelected = category
         })
         if (searchPhrase.isNotEmpty()) {
@@ -46,7 +42,7 @@ fun Home(navController: NavHostController) {
             }
         }
         if (categorySelected.isNotEmpty()) {
-            if (categorySelected == DEFAULT_CATEGORY){
+            if (categorySelected == DEFAULT_CATEGORY) {
                 orderMenuItems = false
             } else {
                 menuItems = databaseMenuItems.filter {

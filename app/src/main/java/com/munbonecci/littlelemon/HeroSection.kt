@@ -97,7 +97,5 @@ fun HeroSection(onPhraseSelected: (String) -> Unit) {
             })
     }
 
-    if (searchPhrase.isNotEmpty()) {
-        onPhraseSelected(searchPhrase)
-    }
+    if (searchPhrase.isNotEmpty()) onPhraseSelected(searchPhrase)
 }

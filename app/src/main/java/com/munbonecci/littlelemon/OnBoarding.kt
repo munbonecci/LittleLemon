@@ -46,15 +46,9 @@ import com.munbonecci.littlelemon.ui.theme.Yellow
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable
 fun OnBoarding(navController: NavHostController) {
-    var firstName by remember {
-        mutableStateOf("")
-    }
-    var lastName by remember {
-        mutableStateOf("")
-    }
-    var email by remember {
-        mutableStateOf("")
-    }
+    var firstName by remember { mutableStateOf("") }
+    var lastName by remember { mutableStateOf("") }
+    var email by remember { mutableStateOf("") }
     val context = LocalContext.current
     val sharedPreferences = context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE)
     val keyboardController = LocalSoftwareKeyboardController.current
@@ -189,9 +183,7 @@ fun OnBoarding(navController: NavHostController) {
 }
 
 private fun showMessage(message: String, context: Context) {
-    Toast.makeText(
-        context, message, Toast.LENGTH_SHORT
-    ).show()
+    Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
 }
 
 @Composable
