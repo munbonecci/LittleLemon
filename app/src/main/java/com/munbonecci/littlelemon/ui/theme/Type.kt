@@ -15,6 +15,11 @@ val Typography: Typography
             fontFamily = fonts,
             fontWeight = FontWeight.Normal,
             fontSize = 16.sp
+        ),
+        h1 = TextStyle(
+            fontFamily = fonts,
+            fontWeight = FontWeight.Bold,
+            fontSize = 16.sp
         )
         /* Other default text styles to override
         button = TextStyle(
