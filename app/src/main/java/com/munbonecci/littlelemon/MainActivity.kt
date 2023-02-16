@@ -13,6 +13,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.compose.rememberNavController
 import androidx.room.Room
+import com.munbonecci.littlelemon.Constants.DATABASE_NAME
 import com.munbonecci.littlelemon.Constants.IS_REGISTERED_PREF
 import com.munbonecci.littlelemon.Constants.PREF_NAME
 import com.munbonecci.littlelemon.ui.theme.LittleLemonTheme
@@ -39,7 +40,7 @@ class MainActivity : ComponentActivity() {
     }
 
     private val database by lazy {
-        Room.databaseBuilder(applicationContext, AppDatabase::class.java, "database").build()
+        Room.databaseBuilder(applicationContext, AppDatabase::class.java, DATABASE_NAME).build()
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {

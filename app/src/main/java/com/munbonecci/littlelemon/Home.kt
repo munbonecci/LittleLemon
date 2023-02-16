@@ -10,6 +10,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import androidx.room.Room
+import com.munbonecci.littlelemon.Constants.DATABASE_NAME
+import com.munbonecci.littlelemon.Constants.DEFAULT_CATEGORY
 import com.munbonecci.littlelemon.ui.theme.LittleLemonTheme
 
 @Composable
@@ -17,7 +19,7 @@ fun Home(navController: NavHostController) {
     val context = LocalContext.current
 
     val database by lazy {
-        Room.databaseBuilder(context.applicationContext, AppDatabase::class.java, "database")
+        Room.databaseBuilder(context.applicationContext, AppDatabase::class.java, DATABASE_NAME)
             .build()
     }
     val databaseMenuItems by database.menuItemDao().getAll().observeAsState(emptyList())
@@ -44,7 +46,7 @@ fun Home(navController: NavHostController) {
             }
         }
         if (categorySelected.isNotEmpty()) {
-            if (categorySelected == "All"){
+            if (categorySelected == DEFAULT_CATEGORY){
                 orderMenuItems = false
             } else {
                 menuItems = databaseMenuItems.filter {
