@@ -11,4 +11,9 @@ object Constants {
     const val PROFILE_SCREEN = "Profile screen"
     const val LIGHT_MODE = "light_mode"
     const val DARK_MODE = "dark_mode"
+    const val STARTERS_CATEGORY = "Starters"
+    const val MAINS_CATEGORY = "Mains"
+    const val DESSERTS_CATEGORY = "Desserts"
+    const val DRINKS_CATEGORY = "Drinks"
+    const val DEFAULT_CATEGORY = "All"
 }
