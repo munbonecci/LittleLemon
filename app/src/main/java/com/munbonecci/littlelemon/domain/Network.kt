@@ -1,5 +1,6 @@
-package com.munbonecci.littlelemon
+package com.munbonecci.littlelemon.domain
 
+import com.munbonecci.littlelemon.database.MenuItemRoom
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 

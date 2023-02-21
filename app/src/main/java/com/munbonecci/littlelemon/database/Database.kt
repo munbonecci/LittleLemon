@@ -1,4 +1,4 @@
-package com.munbonecci.littlelemon
+package com.munbonecci.littlelemon.database
 
 import androidx.lifecycle.LiveData
 import androidx.room.*

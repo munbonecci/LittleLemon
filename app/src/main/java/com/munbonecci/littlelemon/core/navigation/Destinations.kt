@@ -1,4 +1,4 @@
-package com.munbonecci.littlelemon
+package com.munbonecci.littlelemon.core.navigation
 
 import com.munbonecci.littlelemon.Constants.HOME_SCREEN
 import com.munbonecci.littlelemon.Constants.ON_BOARDING_SCREEN

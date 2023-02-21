@@ -1,4 +1,4 @@
-package com.munbonecci.littlelemon
+package com.munbonecci.littlelemon.presentation.home
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Box
@@ -13,6 +13,8 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
+import com.munbonecci.littlelemon.R
+import com.munbonecci.littlelemon.core.navigation.ProfileScreen
 
 @Composable
 fun HomeHeader(navController: NavHostController) {

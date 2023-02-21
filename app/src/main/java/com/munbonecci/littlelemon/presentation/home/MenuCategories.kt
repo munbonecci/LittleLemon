@@ -1,4 +1,4 @@
-package com.munbonecci.littlelemon
+package com.munbonecci.littlelemon.presentation.home
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
@@ -20,6 +20,7 @@ import com.munbonecci.littlelemon.Constants.DESSERTS_CATEGORY
 import com.munbonecci.littlelemon.Constants.DRINKS_CATEGORY
 import com.munbonecci.littlelemon.Constants.MAINS_CATEGORY
 import com.munbonecci.littlelemon.Constants.STARTERS_CATEGORY
+import com.munbonecci.littlelemon.R
 import com.munbonecci.littlelemon.ui.theme.DarkGray
 import com.munbonecci.littlelemon.ui.theme.Gray
 import com.munbonecci.littlelemon.ui.theme.LightGray

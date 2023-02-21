@@ -1,25 +1,33 @@
-package com.munbonecci.littlelemon
+package com.munbonecci.littlelemon.presentation.register
 
 import android.content.Context
 import android.content.res.Configuration
+import android.widget.Toast
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.*
-import androidx.compose.runtime.Composable
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalFocusManager
+import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.core.content.edit
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
@@ -30,17 +38,23 @@ import com.munbonecci.littlelemon.Constants.IS_REGISTERED_PREF
 import com.munbonecci.littlelemon.Constants.LAST_NAME_PREF
 import com.munbonecci.littlelemon.Constants.LIGHT_MODE
 import com.munbonecci.littlelemon.Constants.PREF_NAME
+import com.munbonecci.littlelemon.R
+import com.munbonecci.littlelemon.core.navigation.HomeScreen
 import com.munbonecci.littlelemon.ui.theme.DarkGray
 import com.munbonecci.littlelemon.ui.theme.LittleLemonTheme
+import com.munbonecci.littlelemon.ui.theme.PrimaryGray
 import com.munbonecci.littlelemon.ui.theme.Yellow
 
+@OptIn(ExperimentalComposeUiApi::class)
 @Composable
-fun Profile(navController: NavHostController) {
+fun OnBoarding(navController: NavHostController) {
+    var firstName by remember { mutableStateOf("") }
+    var lastName by remember { mutableStateOf("") }
+    var email by remember { mutableStateOf("") }
     val context = LocalContext.current
     val sharedPreferences = context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE)
-    var firstName = sharedPreferences.getString(FIRST_NAME_PREF, "")
-    var lastName = sharedPreferences.getString(LAST_NAME_PREF, "")
-    var email = sharedPreferences.getString(EMAIL_PREF, "")
+    val keyboardController = LocalSoftwareKeyboardController.current
+    val focusManager = LocalFocusManager.current
 
     Column(
         Modifier.fillMaxHeight()
@@ -53,7 +67,22 @@ fun Profile(navController: NavHostController) {
                 .size(140.dp),
             contentScale = ContentScale.FillWidth,
         )
-        Spacer(modifier = Modifier.height(46.dp))
+        Row(
+            modifier = Modifier
+                .background(color = PrimaryGray)
+                .fillMaxWidth()
+        ) {
+            Text(
+                text = stringResource(id = R.string.on_boarding_header),
+                modifier = Modifier
+                    .weight(1f)
+                    .padding(55.dp),
+                textAlign = TextAlign.Center,
+                color = Color.White,
+                fontWeight = FontWeight.Bold,
+                fontSize = 20.sp
+            )
+        }
         Column(
             modifier = Modifier
                 .padding(16.dp),
@@ -65,26 +94,23 @@ fun Profile(navController: NavHostController) {
                 modifier = Modifier.padding(top = 8.dp)
             )
             OutlinedTextField(
-                value = firstName ?: "",
+                value = firstName,
                 onValueChange = { firstName = it },
                 label = { Text(text = stringResource(id = R.string.first_name)) },
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(top = 26.dp),
+                    .padding(top = 16.dp),
                 colors = TextFieldDefaults.outlinedTextFieldColors(
                     focusedBorderColor = Yellow,
-                    unfocusedBorderColor = DarkGray,
-                    disabledLabelColor = Color.Black,
-                    disabledTextColor = Color.Black
+                    unfocusedBorderColor = DarkGray
                 ),
                 singleLine = true,
                 keyboardOptions = KeyboardOptions(
                     imeAction = ImeAction.Next,
                 ),
-                enabled = false
             )
             OutlinedTextField(
-                value = lastName ?: "",
+                value = lastName,
                 onValueChange = { lastName = it },
                 label = { Text(text = stringResource(id = R.string.last_name)) },
                 modifier = Modifier
@@ -92,18 +118,15 @@ fun Profile(navController: NavHostController) {
                     .padding(top = 16.dp),
                 colors = TextFieldDefaults.outlinedTextFieldColors(
                     focusedBorderColor = Yellow,
-                    unfocusedBorderColor = DarkGray,
-                    disabledLabelColor = Color.Black,
-                    disabledTextColor = Color.Black
+                    unfocusedBorderColor = DarkGray
                 ),
                 singleLine = true,
                 keyboardOptions = KeyboardOptions(
                     imeAction = ImeAction.Next,
                 ),
-                enabled = false
             )
             OutlinedTextField(
-                value = email ?: "",
+                value = email,
                 onValueChange = { email = it },
                 label = { Text(text = stringResource(id = R.string.email)) },
                 modifier = Modifier
@@ -111,33 +134,41 @@ fun Profile(navController: NavHostController) {
                     .padding(top = 16.dp, bottom = 16.dp),
                 colors = TextFieldDefaults.outlinedTextFieldColors(
                     focusedBorderColor = Yellow,
-                    unfocusedBorderColor = DarkGray,
-                    disabledLabelColor = Color.Black,
-                    disabledTextColor = Color.Black
+                    unfocusedBorderColor = DarkGray
                 ),
                 singleLine = true,
                 keyboardOptions = KeyboardOptions(
                     imeAction = ImeAction.Done,
                 ),
-                enabled = false
+                keyboardActions = KeyboardActions {
+                    KeyboardActions(onDone = {
+                        keyboardController?.hide()
+                        focusManager.clearFocus()
+                    })
+                }
             )
         }
         Spacer(modifier = Modifier.weight(1f))
         OutlinedButton(
             onClick = {
-                sharedPreferences.edit(commit = true) {
-                    putBoolean(IS_REGISTERED_PREF, false)
+                if (firstName.isNotBlank() && lastName.isNotBlank() && email.isNotBlank()) {
+                    showMessage(context.getString(R.string.registration_success), context)
+                    sharedPreferences.edit(commit = true) {
+                        putBoolean(IS_REGISTERED_PREF, true)
+                    }
+                    sharedPreferences.edit(commit = true) {
+                        putString(FIRST_NAME_PREF, firstName)
+                    }
+                    sharedPreferences.edit(commit = true) {
+                        putString(LAST_NAME_PREF, lastName)
+                    }
+                    sharedPreferences.edit(commit = true) {
+                        putString(EMAIL_PREF, email)
+                    }
+                    navController.navigate(HomeScreen.route)
+                } else {
+                    showMessage(context.getString(R.string.registration_failed), context)
                 }
-                sharedPreferences.edit(commit = true) {
-                    putString(FIRST_NAME_PREF, "")
-                }
-                sharedPreferences.edit(commit = true) {
-                    putString(LAST_NAME_PREF, "")
-                }
-                sharedPreferences.edit(commit = true) {
-                    putString(EMAIL_PREF, "")
-                }
-                navController.navigate(OnBoardingScreen.route)
             }, modifier = Modifier
                 .fillMaxWidth()
                 .padding(16.dp),
@@ -148,19 +179,23 @@ fun Profile(navController: NavHostController) {
             border = BorderStroke(1.dp, Color.Black),
             shape = RoundedCornerShape(16)
         ) {
-            Text(text = stringResource(id = R.string.log_out))
+            Text(text = stringResource(id = R.string.register))
         }
     }
+}
+
+private fun showMessage(message: String, context: Context) {
+    Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
 }
 
 @Composable
 @Preview(name = LIGHT_MODE)
 @Preview(name = DARK_MODE, uiMode = Configuration.UI_MODE_NIGHT_YES)
-fun ProfilePreview() {
+fun OnBoardingPreview() {
     LittleLemonTheme {
         Surface {
             val navController = rememberNavController()
-            Profile(navController)
+            OnBoarding(navController)
         }
     }
 }

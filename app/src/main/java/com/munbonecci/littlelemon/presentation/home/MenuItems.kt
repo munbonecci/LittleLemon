@@ -1,4 +1,4 @@
-package com.munbonecci.littlelemon
+package com.munbonecci.littlelemon.presentation.home
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
@@ -20,6 +20,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
 import com.bumptech.glide.integration.compose.GlideImage
+import com.munbonecci.littlelemon.database.MenuItemRoom
 import com.munbonecci.littlelemon.ui.theme.LightGray
 import com.munbonecci.littlelemon.ui.theme.PrimaryGray
 

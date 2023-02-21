@@ -1,4 +1,4 @@
-package com.munbonecci.littlelemon
+package com.munbonecci.littlelemon.core
 
 import android.content.res.Configuration
 import android.os.Bundle
@@ -13,9 +13,14 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.compose.rememberNavController
 import androidx.room.Room
+import com.munbonecci.littlelemon.Constants
 import com.munbonecci.littlelemon.Constants.DATABASE_NAME
 import com.munbonecci.littlelemon.Constants.IS_REGISTERED_PREF
 import com.munbonecci.littlelemon.Constants.PREF_NAME
+import com.munbonecci.littlelemon.core.navigation.NavigationComposable
+import com.munbonecci.littlelemon.database.AppDatabase
+import com.munbonecci.littlelemon.domain.MenuItemNetwork
+import com.munbonecci.littlelemon.domain.MenuNetwork
 import com.munbonecci.littlelemon.ui.theme.LittleLemonTheme
 import io.ktor.client.*
 import io.ktor.client.call.*

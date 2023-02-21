@@ -1,4 +1,4 @@
-package com.munbonecci.littlelemon
+package com.munbonecci.littlelemon.presentation.home
 
 import android.content.res.Configuration
 import androidx.compose.foundation.layout.Column
@@ -10,8 +10,10 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import androidx.room.Room
+import com.munbonecci.littlelemon.Constants
 import com.munbonecci.littlelemon.Constants.DATABASE_NAME
 import com.munbonecci.littlelemon.Constants.DEFAULT_CATEGORY
+import com.munbonecci.littlelemon.database.AppDatabase
 import com.munbonecci.littlelemon.ui.theme.LittleLemonTheme
 
 @Composable
