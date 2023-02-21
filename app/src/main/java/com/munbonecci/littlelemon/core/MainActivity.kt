@@ -13,6 +13,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.compose.rememberNavController
 import androidx.room.Room
+import com.munbonecci.littlelemon.BuildConfig
 import com.munbonecci.littlelemon.Constants
 import com.munbonecci.littlelemon.Constants.DATABASE_NAME
 import com.munbonecci.littlelemon.Constants.IS_REGISTERED_PREF
@@ -72,7 +73,7 @@ class MainActivity : ComponentActivity() {
 
     private suspend fun fetchMenu(): List<MenuItemNetwork> {
         val response = httpClient
-            .get("https://raw.githubusercontent.com/Meta-Mobile-Developer-PC/Working-With-Data-API/main/menu.json")
+            .get(BuildConfig.DATA_API_URL)
             .body<MenuNetwork>()
         return response.menu
     }

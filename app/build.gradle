@@ -20,6 +20,7 @@ android {
         vectorDrawables {
             useSupportLibrary true
         }
+        buildConfigField "String", "DATA_API_URL", project.findProperty("DATA_API")
     }
 
     buildTypes {

@@ -5,12 +5,11 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyListScope
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Divider
 import androidx.compose.material.Text
-import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -25,9 +24,7 @@ import com.munbonecci.littlelemon.ui.theme.LightGray
 import com.munbonecci.littlelemon.ui.theme.PrimaryGray
 
 @OptIn(ExperimentalGlideComposeApi::class)
-@Composable
-fun MenuItems(menuItems: List<MenuItemRoom>, onItemPressed: (MenuItemRoom) -> Unit) {
-    LazyColumn {
+fun LazyListScope.menuItems(menuItems: List<MenuItemRoom>, onItemPressed: (MenuItemRoom) -> Unit) {
         items(menuItems) { menuItem ->
             Column(modifier = Modifier
                 .clickable { onItemPressed(menuItem) }) {
@@ -69,5 +66,4 @@ fun MenuItems(menuItems: List<MenuItemRoom>, onItemPressed: (MenuItemRoom) -> Un
                 )
             }
         }
-    }
 }
