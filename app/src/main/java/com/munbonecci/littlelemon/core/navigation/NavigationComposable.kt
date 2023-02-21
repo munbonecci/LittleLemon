@@ -23,7 +23,7 @@ fun NavigationComposable(navController: NavHostController, isRegistered: Boolean
         composable(route = HomeScreen.route) {
             Home(navController, onItemPressed = {
                 navController.navigate(
-                    "${DishDetailScreen.route}/${it.id}/${it.title}/${it.description}/${it.image}/${it.price}/${it.category}"
+                    "${DishDetailScreen.route}/${it.id}"
                 )
             })
         }
@@ -31,14 +31,9 @@ fun NavigationComposable(navController: NavHostController, isRegistered: Boolean
             Profile(navController)
         }
         composable(
-            route = "${DishDetailScreen.route}/{itemId}/{itemName}/{itemDescription}/{itemImage}/{itemPrice}/{itemCategory}",
+            route = "${DishDetailScreen.route}/{itemId}",
             arguments = listOf(
                 navArgument("itemId") { type = NavType.StringType },
-                navArgument("itemName") { type = NavType.StringType },
-                navArgument("itemDescription") { type = NavType.StringType },
-                navArgument("itemImage") { type = NavType.StringType },
-                navArgument("itemPrice") { type = NavType.LongType },
-                navArgument("itemCategory") { type = NavType.StringType }
             )
         ) { navStackEntry ->
             DishDetail(
@@ -46,11 +41,6 @@ fun NavigationComposable(navController: NavHostController, isRegistered: Boolean
                     navController.navigate(HomeScreen.route)
                 },
                 navStackEntry.arguments?.getString("itemId", ""),
-                navStackEntry.arguments?.getString("itemName", ""),
-                navStackEntry.arguments?.getString("itemDescription", ""),
-                navStackEntry.arguments?.getString("itemImage", ""),
-                navStackEntry.arguments?.getString("itemPrice", ""),
-                navStackEntry.arguments?.getString("itemCategory", "")
             )
         }
     }

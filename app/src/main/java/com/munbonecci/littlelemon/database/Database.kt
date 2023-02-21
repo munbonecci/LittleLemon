@@ -5,12 +5,12 @@ import androidx.room.*
 
 @Entity
 data class MenuItemRoom(
-    @PrimaryKey val id: Int,
-    val title: String,
-    val description: String,
-    val price: Double,
-    val image: String,
-    val category: String
+    @PrimaryKey val id: Int = 0,
+    val title: String = "",
+    val description: String = "",
+    val price: Double = 0.0,
+    val image: String = "",
+    val category: String = ""
 )
 
 @Dao
@@ -20,6 +20,9 @@ interface MenuItemDao {
 
     @Insert
     fun insertAll(vararg menuItems: MenuItemRoom)
+
+    @Query("SELECT * FROM MenuItemRoom WHERE id=:id ")
+    fun getItem(id: String): LiveData<MenuItemRoom>
 
     @Query("SELECT (SELECT COUNT(*) FROM MenuItemRoom) == 0")
     fun isEmpty(): Boolean

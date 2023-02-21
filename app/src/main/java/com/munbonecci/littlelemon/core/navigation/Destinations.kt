@@ -23,5 +23,5 @@ object ProfileScreen : Destinations {
 
 object DishDetailScreen : Destinations {
     override val route =
-        "${DISH_DETAIL_SCREEN}/{itemId}/{itemName}/{itemDescription}/{itemImage}/{itemPrice}/{itemCategory}"
+        "${DISH_DETAIL_SCREEN}/{itemId}"
 }
