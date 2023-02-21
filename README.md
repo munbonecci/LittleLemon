@@ -49,4 +49,4 @@ This project is maintained by:
 - Run app in your emulator or physical device
 
 ![App Screens](app/wireframe.png)
-![App Screens](app/wireframe1.png)
+![App Screens](app/app_screens.png)
