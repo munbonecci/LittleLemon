@@ -31,6 +31,7 @@ This project is maintained by:
     - Interface for accessing and modifying preference data
 - [Glide Compose](https://bumptech.github.io/glide/int/compose.html) -This library integrates with 
     - Compose to allow you to load images in your Compose apps with Glide in a performant manner.
+- [Lottie Compose](https://github.com/airbnb/lottie/blob/master/android-compose.md) - Lottie Animations
 - Jetpack
     - [Compose](https://developer.android.com/jetpack/compose?gclid=CjwKCAiAzKqdBhAnEiwAePEjkkbfP8b_r6c57F3jtdwOjxWpBbNOXVmpSnAUu4HKCid7KtSvfiiYeRoC1wYQAvD_BwE&gclsrc=aw.ds)
         - Android’s recommended modern toolkit for building native UI.

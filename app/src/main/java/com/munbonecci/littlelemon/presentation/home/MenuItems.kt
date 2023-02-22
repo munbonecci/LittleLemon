@@ -1,15 +1,14 @@
 package com.munbonecci.littlelemon.presentation.home
 
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyListScope
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Divider
 import androidx.compose.material.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -17,14 +16,24 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.airbnb.lottie.compose.LottieAnimation
+import com.airbnb.lottie.compose.LottieCompositionSpec
+import com.airbnb.lottie.compose.LottieConstants
+import com.airbnb.lottie.compose.rememberLottieComposition
 import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
 import com.bumptech.glide.integration.compose.GlideImage
+import com.munbonecci.littlelemon.R
 import com.munbonecci.littlelemon.database.MenuItemRoom
 import com.munbonecci.littlelemon.ui.theme.LightGray
 import com.munbonecci.littlelemon.ui.theme.PrimaryGray
 
 @OptIn(ExperimentalGlideComposeApi::class)
 fun LazyListScope.menuItems(menuItems: List<MenuItemRoom>, onItemPressed: (MenuItemRoom) -> Unit) {
+    if (menuItems.isEmpty()) {
+        item {
+            ShowEmptyItemsAnimation()
+        }
+    } else {
         items(menuItems) { menuItem ->
             Column(modifier = Modifier
                 .clickable { onItemPressed(menuItem) }) {
@@ -66,4 +75,24 @@ fun LazyListScope.menuItems(menuItems: List<MenuItemRoom>, onItemPressed: (MenuI
                 )
             }
         }
+    }
+}
+
+@Composable
+fun ShowEmptyItemsAnimation() {
+    val composition by rememberLottieComposition(spec = LottieCompositionSpec.RawRes(R.raw.sad_empty_box))
+    Row(
+        modifier = Modifier
+            .fillMaxWidth(),
+        horizontalArrangement = Arrangement.Center,
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        LottieAnimation(
+            composition = composition,
+            iterations = LottieConstants.IterateForever,
+            modifier = Modifier
+                .size(148.dp),
+            alignment = Alignment.TopCenter
+        )
+    }
 }
