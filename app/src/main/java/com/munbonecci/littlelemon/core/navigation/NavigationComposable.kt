@@ -6,6 +6,7 @@ import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
+import com.munbonecci.littlelemon.Constants.ITEM_ID
 import com.munbonecci.littlelemon.presentation.dish_detail.DishDetail
 import com.munbonecci.littlelemon.presentation.home.Home
 import com.munbonecci.littlelemon.presentation.profile.Profile
@@ -33,14 +34,14 @@ fun NavigationComposable(navController: NavHostController, isRegistered: Boolean
         composable(
             route = "${DishDetailScreen.route}/{itemId}",
             arguments = listOf(
-                navArgument("itemId") { type = NavType.StringType },
+                navArgument(ITEM_ID) { type = NavType.StringType },
             )
         ) { navStackEntry ->
             DishDetail(
                 onBackButtonClicked = {
                     navController.navigate(HomeScreen.route)
                 },
-                navStackEntry.arguments?.getString("itemId", ""),
+                navStackEntry.arguments?.getString(ITEM_ID, ""),
             )
         }
     }

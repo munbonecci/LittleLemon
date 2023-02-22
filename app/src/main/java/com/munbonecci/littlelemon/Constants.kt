@@ -18,4 +18,6 @@ object Constants {
     const val DRINKS_CATEGORY = "Drinks"
     const val DEFAULT_CATEGORY = "All"
     const val DATABASE_NAME = "database"
+    const val ITEM_ID = "itemId"
+    const val BUTTON_ICON = "button_icon"
 }

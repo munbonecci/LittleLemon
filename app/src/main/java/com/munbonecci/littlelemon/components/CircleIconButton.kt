@@ -17,6 +17,7 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.munbonecci.littlelemon.Constants
+import com.munbonecci.littlelemon.Constants.BUTTON_ICON
 import com.munbonecci.littlelemon.ui.theme.LittleLemonTheme
 
 @Composable
@@ -38,7 +39,7 @@ fun CircleIconButton(
        ) {
            Icon(
                icon,
-               contentDescription = "button_icon",
+               contentDescription = BUTTON_ICON,
                modifier = Modifier.padding(5.dp)
            )
        }

@@ -7,6 +7,7 @@ import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
@@ -56,130 +57,138 @@ fun OnBoarding(navController: NavHostController) {
     val keyboardController = LocalSoftwareKeyboardController.current
     val focusManager = LocalFocusManager.current
 
-    Column(
-        Modifier.fillMaxHeight()
+    LazyColumn(
+        Modifier.fillMaxSize()
     ) {
-        Image(
-            painter = painterResource(id = R.drawable.logo_),
-            contentDescription = stringResource(id = R.string.app_name),
-            modifier = Modifier
-                .align(Alignment.CenterHorizontally)
-                .size(140.dp),
-            contentScale = ContentScale.FillWidth,
-        )
-        Row(
-            modifier = Modifier
-                .background(color = PrimaryGray)
-                .fillMaxWidth()
-        ) {
-            Text(
-                text = stringResource(id = R.string.on_boarding_header),
-                modifier = Modifier
-                    .weight(1f)
-                    .padding(55.dp),
-                textAlign = TextAlign.Center,
-                color = Color.White,
-                fontWeight = FontWeight.Bold,
-                fontSize = 20.sp
-            )
-        }
-        Column(
-            modifier = Modifier
-                .padding(16.dp),
-            verticalArrangement = Arrangement.SpaceBetween
-        ) {
-            Text(
-                text = stringResource(id = R.string.personal_information),
-                fontWeight = FontWeight.Bold,
-                modifier = Modifier.padding(top = 8.dp)
-            )
-            OutlinedTextField(
-                value = firstName,
-                onValueChange = { firstName = it },
-                label = { Text(text = stringResource(id = R.string.first_name)) },
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(top = 16.dp),
-                colors = TextFieldDefaults.outlinedTextFieldColors(
-                    focusedBorderColor = Yellow,
-                    unfocusedBorderColor = DarkGray
-                ),
-                singleLine = true,
-                keyboardOptions = KeyboardOptions(
-                    imeAction = ImeAction.Next,
-                ),
-            )
-            OutlinedTextField(
-                value = lastName,
-                onValueChange = { lastName = it },
-                label = { Text(text = stringResource(id = R.string.last_name)) },
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(top = 16.dp),
-                colors = TextFieldDefaults.outlinedTextFieldColors(
-                    focusedBorderColor = Yellow,
-                    unfocusedBorderColor = DarkGray
-                ),
-                singleLine = true,
-                keyboardOptions = KeyboardOptions(
-                    imeAction = ImeAction.Next,
-                ),
-            )
-            OutlinedTextField(
-                value = email,
-                onValueChange = { email = it },
-                label = { Text(text = stringResource(id = R.string.email)) },
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(top = 16.dp, bottom = 16.dp),
-                colors = TextFieldDefaults.outlinedTextFieldColors(
-                    focusedBorderColor = Yellow,
-                    unfocusedBorderColor = DarkGray
-                ),
-                singleLine = true,
-                keyboardOptions = KeyboardOptions(
-                    imeAction = ImeAction.Done,
-                ),
-                keyboardActions = KeyboardActions {
-                    KeyboardActions(onDone = {
-                        keyboardController?.hide()
-                        focusManager.clearFocus()
-                    })
+        item {
+            Column(
+                Modifier
+                    .fillMaxHeight()
+                    .fillParentMaxHeight()
+            ) {
+                Image(
+                    painter = painterResource(id = R.drawable.logo_),
+                    contentDescription = stringResource(id = R.string.app_name),
+                    modifier = Modifier
+                        .align(Alignment.CenterHorizontally)
+                        .size(140.dp),
+                    contentScale = ContentScale.FillWidth,
+                )
+                Row(
+                    modifier = Modifier
+                        .background(color = PrimaryGray)
+                        .fillMaxWidth()
+                ) {
+                    Text(
+                        text = stringResource(id = R.string.on_boarding_header),
+                        modifier = Modifier
+                            .weight(1f)
+                            .padding(55.dp),
+                        textAlign = TextAlign.Center,
+                        color = Color.White,
+                        fontWeight = FontWeight.Bold,
+                        fontSize = 20.sp
+                    )
                 }
-            )
-        }
-        Spacer(modifier = Modifier.weight(1f))
-        OutlinedButton(
-            onClick = {
-                if (firstName.isNotBlank() && lastName.isNotBlank() && email.isNotBlank()) {
-                    showMessage(context.getString(R.string.registration_success), context)
-                    sharedPreferences.edit(commit = true) {
-                        putBoolean(IS_REGISTERED_PREF, true)
-                    }
-                    sharedPreferences.edit(commit = true) {
-                        putString(FIRST_NAME_PREF, firstName)
-                    }
-                    sharedPreferences.edit(commit = true) {
-                        putString(LAST_NAME_PREF, lastName)
-                    }
-                    sharedPreferences.edit(commit = true) {
-                        putString(EMAIL_PREF, email)
-                    }
-                    navController.navigate(HomeScreen.route)
-                } else {
-                    showMessage(context.getString(R.string.registration_failed), context)
+                Column(
+                    modifier = Modifier
+                        .padding(16.dp),
+                    verticalArrangement = Arrangement.SpaceBetween
+                ) {
+                    Text(
+                        text = stringResource(id = R.string.personal_information),
+                        fontWeight = FontWeight.Bold,
+                        modifier = Modifier.padding(top = 8.dp)
+                    )
+                    OutlinedTextField(
+                        value = firstName,
+                        onValueChange = { firstName = it },
+                        label = { Text(text = stringResource(id = R.string.first_name)) },
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(top = 16.dp),
+                        colors = TextFieldDefaults.outlinedTextFieldColors(
+                            focusedBorderColor = Yellow,
+                            unfocusedBorderColor = DarkGray
+                        ),
+                        singleLine = true,
+                        keyboardOptions = KeyboardOptions(
+                            imeAction = ImeAction.Next,
+                        ),
+                    )
+                    OutlinedTextField(
+                        value = lastName,
+                        onValueChange = { lastName = it },
+                        label = { Text(text = stringResource(id = R.string.last_name)) },
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(top = 16.dp),
+                        colors = TextFieldDefaults.outlinedTextFieldColors(
+                            focusedBorderColor = Yellow,
+                            unfocusedBorderColor = DarkGray
+                        ),
+                        singleLine = true,
+                        keyboardOptions = KeyboardOptions(
+                            imeAction = ImeAction.Next,
+                        ),
+                    )
+                    OutlinedTextField(
+                        value = email,
+                        onValueChange = { email = it },
+                        label = { Text(text = stringResource(id = R.string.email)) },
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(top = 16.dp, bottom = 16.dp),
+                        colors = TextFieldDefaults.outlinedTextFieldColors(
+                            focusedBorderColor = Yellow,
+                            unfocusedBorderColor = DarkGray
+                        ),
+                        singleLine = true,
+                        keyboardOptions = KeyboardOptions(
+                            imeAction = ImeAction.Done,
+                        ),
+                        keyboardActions = KeyboardActions {
+                            KeyboardActions(onDone = {
+                                keyboardController?.hide()
+                                focusManager.clearFocus()
+                            })
+                        }
+                    )
                 }
-            }, modifier = Modifier
-                .fillMaxWidth()
-                .padding(16.dp),
-            colors = ButtonDefaults.buttonColors(
-                backgroundColor = Yellow,
-                contentColor = Color.Black
-            ),
-            border = BorderStroke(1.dp, Color.Black),
-            shape = RoundedCornerShape(16)
-        ) {
-            Text(text = stringResource(id = R.string.register))
+                Spacer(modifier = Modifier.weight(1f))
+                OutlinedButton(
+                    onClick = {
+                        if (firstName.isNotBlank() && lastName.isNotBlank() && email.isNotBlank()) {
+                            showMessage(context.getString(R.string.registration_success), context)
+                            sharedPreferences.edit(commit = true) {
+                                putBoolean(IS_REGISTERED_PREF, true)
+                            }
+                            sharedPreferences.edit(commit = true) {
+                                putString(FIRST_NAME_PREF, firstName)
+                            }
+                            sharedPreferences.edit(commit = true) {
+                                putString(LAST_NAME_PREF, lastName)
+                            }
+                            sharedPreferences.edit(commit = true) {
+                                putString(EMAIL_PREF, email)
+                            }
+                            navController.navigate(HomeScreen.route)
+                        } else {
+                            showMessage(context.getString(R.string.registration_failed), context)
+                        }
+                    }, modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(16.dp),
+                    colors = ButtonDefaults.buttonColors(
+                        backgroundColor = Yellow,
+                        contentColor = Color.Black
+                    ),
+                    border = BorderStroke(1.dp, Color.Black),
+                    shape = RoundedCornerShape(16)
+                ) {
+                    Text(text = stringResource(id = R.string.register))
+                }
+            }
         }
     }
 }

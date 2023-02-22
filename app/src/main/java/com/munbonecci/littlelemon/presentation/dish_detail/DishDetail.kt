@@ -125,7 +125,7 @@ private fun DetailCardContent(
             modifier = Modifier.padding(10.dp)
         ) {
             item {
-                Column {
+                Column(modifier = Modifier.fillParentMaxHeight()) {
                     Text(
                         text = menuItem.title,
                         fontWeight = FontWeight.Bold,
