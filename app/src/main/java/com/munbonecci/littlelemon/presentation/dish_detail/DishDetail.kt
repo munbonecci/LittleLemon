@@ -25,6 +25,7 @@ import androidx.room.Room
 import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
 import com.bumptech.glide.integration.compose.GlideImage
 import com.munbonecci.littlelemon.Constants
+import com.munbonecci.littlelemon.Constants.BUTTON_ICON
 import com.munbonecci.littlelemon.R
 import com.munbonecci.littlelemon.components.CircleIconButton
 import com.munbonecci.littlelemon.database.AppDatabase
@@ -162,10 +163,27 @@ private fun DetailCardContent(
                         border = BorderStroke(1.dp, Color.Black),
                         shape = RoundedCornerShape(16)
                     ) {
-                        Text(
-                            text =
-                            "${stringResource(id = R.string.add_to_cart_label)} $%.2f".format(total)
-                        )
+                        Row(
+                            modifier = Modifier
+                                .fillMaxWidth(),
+                            horizontalArrangement = Arrangement.Center,
+                            verticalAlignment = Alignment.CenterVertically
+                        ) {
+                            Icon(
+                                imageVector = Icons.Default.ShoppingCart,
+                                modifier = Modifier
+                                    .size(26.dp)
+                                    .padding(end = 8.dp),
+                                contentDescription = BUTTON_ICON,
+                                tint = Color.Unspecified
+                            )
+                            Text(
+                                text =
+                                "${stringResource(id = R.string.add_to_cart_label)} $%.2f".format(
+                                    total
+                                )
+                            )
+                        }
                     }
                 }
             }
