@@ -7,9 +7,8 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowBack
-import androidx.compose.material.icons.filled.FavoriteBorder
-import androidx.compose.runtime.Composable
+import androidx.compose.material.icons.filled.*
+import androidx.compose.runtime.*
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -112,6 +111,8 @@ private fun DetailCardContent(
     modifier: Modifier = Modifier,
     menuItem: MenuItemRoom
 ) {
+    var total by remember { mutableStateOf(menuItem.price) }
+    total = menuItem.price
     Card(
         shape = RoundedCornerShape(
             topEnd = 30.dp,
@@ -144,6 +145,9 @@ private fun DetailCardContent(
                         fontWeight = FontWeight.Bold,
                         modifier = Modifier.padding(top = 8.dp, start = 16.dp, end = 16.dp)
                     )
+                    AddOrRemoveItemComponent(onButtonsPressed = { quantity ->
+                        total = menuItem.price * quantity
+                    })
                     Spacer(modifier = Modifier.weight(1f))
                     OutlinedButton(
                         onClick = {
@@ -158,9 +162,48 @@ private fun DetailCardContent(
                         border = BorderStroke(1.dp, Color.Black),
                         shape = RoundedCornerShape(16)
                     ) {
-                        Text(text = stringResource(id = R.string.add_to_cart_label))
+                        Text(
+                            text =
+                            "${stringResource(id = R.string.add_to_cart_label)} $%.2f".format(total)
+                        )
                     }
                 }
+            }
+        }
+    }
+}
+
+@Composable
+fun AddOrRemoveItemComponent(onButtonsPressed: (Int) -> Unit) {
+    var counter by remember { mutableStateOf(1) }
+
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(64.dp),
+        horizontalArrangement = Arrangement.SpaceBetween,
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        CircleIconButton(
+            icon = Icons.Default.KeyboardArrowLeft
+        ) {
+            if (counter > 1) {
+                counter--
+                onButtonsPressed.invoke(counter)
+            }
+        }
+        Text(
+            text = counter.toString(),
+            color = PrimaryGray,
+            fontSize = 24.sp,
+            fontWeight = FontWeight.Bold,
+        )
+        CircleIconButton(
+            icon = Icons.Default.KeyboardArrowRight
+        ) {
+            if (counter < 20) {
+                counter++
+                onButtonsPressed.invoke(counter)
             }
         }
     }
