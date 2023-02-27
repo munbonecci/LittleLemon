@@ -13,7 +13,9 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.airbnb.lottie.compose.LottieAnimation
@@ -25,6 +27,7 @@ import com.bumptech.glide.integration.compose.GlideImage
 import com.munbonecci.littlelemon.R
 import com.munbonecci.littlelemon.database.MenuItemRoom
 import com.munbonecci.littlelemon.ui.theme.LightGray
+import com.munbonecci.littlelemon.ui.theme.Peach
 import com.munbonecci.littlelemon.ui.theme.PrimaryGray
 
 @OptIn(ExperimentalGlideComposeApi::class)
@@ -81,11 +84,11 @@ fun LazyListScope.menuItems(menuItems: List<MenuItemRoom>, onItemPressed: (MenuI
 @Composable
 fun ShowEmptyItemsAnimation() {
     val composition by rememberLottieComposition(spec = LottieCompositionSpec.RawRes(R.raw.sad_empty_box))
-    Row(
+    Column(
         modifier = Modifier
             .fillMaxWidth(),
-        horizontalArrangement = Arrangement.Center,
-        verticalAlignment = Alignment.CenterVertically
+        verticalArrangement = Arrangement.Center,
+        horizontalAlignment = Alignment.CenterHorizontally
     ) {
         LottieAnimation(
             composition = composition,
@@ -93,6 +96,12 @@ fun ShowEmptyItemsAnimation() {
             modifier = Modifier
                 .size(148.dp),
             alignment = Alignment.TopCenter
+        )
+        Text(
+            text = stringResource(id = R.string.empty_text),
+            textAlign = TextAlign.Center,
+            color = Peach,
+            fontWeight = FontWeight.Bold
         )
     }
 }

@@ -23,4 +23,5 @@
     <string name="price_label">Price:</string>
     <string name="dish_detail_label">Dish detail</string>
     <string name="add_to_cart_label">Add to cart</string>
+    <string name="empty_text">Sorry there is nothing to show :(</string>
 </resources>
