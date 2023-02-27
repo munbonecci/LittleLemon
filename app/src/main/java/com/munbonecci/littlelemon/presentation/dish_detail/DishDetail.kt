@@ -2,6 +2,7 @@ package com.munbonecci.littlelemon.presentation.dish_detail
 
 import android.content.res.Configuration
 import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -18,6 +19,7 @@ import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -30,9 +32,8 @@ import com.munbonecci.littlelemon.R
 import com.munbonecci.littlelemon.components.CircleIconButton
 import com.munbonecci.littlelemon.database.AppDatabase
 import com.munbonecci.littlelemon.database.MenuItemRoom
-import com.munbonecci.littlelemon.ui.theme.LittleLemonTheme
-import com.munbonecci.littlelemon.ui.theme.PrimaryGray
-import com.munbonecci.littlelemon.ui.theme.Yellow
+import com.munbonecci.littlelemon.ui.theme.*
+import java.util.*
 
 @Composable
 fun DishDetail(
@@ -127,30 +128,47 @@ private fun DetailCardContent(
         ) {
             item {
                 Column(modifier = Modifier.fillParentMaxHeight()) {
-                    Text(
-                        text = menuItem.title,
-                        fontWeight = FontWeight.Bold,
-                        fontSize = 20.sp,
-                        modifier = Modifier.padding(all = 16.dp)
-                    )
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(16.dp),
+                        horizontalArrangement = Arrangement.SpaceBetween,
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        Text(
+                            text = menuItem.title,
+                            fontWeight = FontWeight.Bold,
+                            fontSize = 20.sp,
+                        )
+                        Card(
+                            modifier = Modifier.clickable { },
+                            shape = RoundedCornerShape(26.dp),
+                            backgroundColor = Peach
+                        ) {
+                            Text(
+                                text = menuItem.category.replaceFirstChar {
+                                    if (it.isLowerCase()) it.titlecase(
+                                        Locale.US
+                                    ) else it.toString()
+                                },
+                                textAlign = TextAlign.Center,
+                                color = White,
+                                modifier = Modifier.padding(8.dp),
+                                fontWeight = FontWeight.Bold
+                            )
+                        }
+                    }
                     Text(
                         text = "${stringResource(id = R.string.price_label)} $%.2f".format(menuItem.price),
                         color = PrimaryGray,
                         fontSize = 18.sp,
                         fontWeight = FontWeight.Bold,
-                        modifier = Modifier.padding(top = 8.dp, start = 16.dp, end = 16.dp)
+                        modifier = Modifier.padding(top = 4.dp, start = 16.dp, end = 16.dp)
                     )
                     Text(
                         text = menuItem.description,
                         color = PrimaryGray,
                         fontSize = 18.sp,
-                        modifier = Modifier.padding(top = 8.dp, start = 16.dp, end = 8.dp)
-                    )
-                    Text(
-                        text = menuItem.category,
-                        color = PrimaryGray,
-                        fontSize = 18.sp,
-                        fontWeight = FontWeight.Bold,
                         modifier = Modifier.padding(top = 8.dp, start = 16.dp, end = 8.dp)
                     )
                     AddOrRemoveItemComponent(onButtonsPressed = { quantity ->
