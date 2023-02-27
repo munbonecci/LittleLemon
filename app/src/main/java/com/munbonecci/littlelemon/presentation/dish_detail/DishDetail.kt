@@ -205,7 +205,7 @@ fun AddOrRemoveItemComponent(onButtonsPressed: (Int) -> Unit) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(64.dp),
+            .padding(44.dp),
         horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically
     ) {
