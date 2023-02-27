@@ -29,6 +29,7 @@ import com.bumptech.glide.integration.compose.GlideImage
 import com.munbonecci.littlelemon.Constants
 import com.munbonecci.littlelemon.Constants.BUTTON_ICON
 import com.munbonecci.littlelemon.R
+import com.munbonecci.littlelemon.components.AddOrRemoveItemComponent
 import com.munbonecci.littlelemon.components.CircleIconButton
 import com.munbonecci.littlelemon.database.AppDatabase
 import com.munbonecci.littlelemon.database.MenuItemRoom
@@ -211,42 +212,6 @@ private fun DetailCardContent(
                         }
                     }
                 }
-            }
-        }
-    }
-}
-
-@Composable
-fun AddOrRemoveItemComponent(onButtonsPressed: (Int) -> Unit) {
-    var counter by remember { mutableStateOf(1) }
-
-    Row(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(44.dp),
-        horizontalArrangement = Arrangement.SpaceBetween,
-        verticalAlignment = Alignment.CenterVertically
-    ) {
-        CircleIconButton(
-            icon = Icons.Default.KeyboardArrowLeft
-        ) {
-            if (counter > 1) {
-                counter--
-                onButtonsPressed.invoke(counter)
-            }
-        }
-        Text(
-            text = counter.toString(),
-            color = PrimaryGray,
-            fontSize = 24.sp,
-            fontWeight = FontWeight.Bold,
-        )
-        CircleIconButton(
-            icon = Icons.Default.KeyboardArrowRight
-        ) {
-            if (counter < 20) {
-                counter++
-                onButtonsPressed.invoke(counter)
             }
         }
     }
