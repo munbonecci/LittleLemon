@@ -47,8 +47,8 @@ fun DishDetail(
     }
     val item = database.menuItemDao().getItem(id ?: "1").observeAsState(MenuItemRoom())
     val size = LocalConfiguration.current
-    val headerHeight = size.screenHeightDp * 0.3
-    val contentHeight = size.screenHeightDp * 0.73
+    val headerHeight = size.screenHeightDp * 0.5
+    val contentHeight = size.screenHeightDp * 0.53
 
     Box(
         modifier = Modifier.fillMaxSize(),
@@ -134,17 +134,24 @@ private fun DetailCardContent(
                         modifier = Modifier.padding(all = 16.dp)
                     )
                     Text(
-                        text = menuItem.description,
-                        color = PrimaryGray,
-                        fontSize = 18.sp,
-                        modifier = Modifier.padding(start = 16.dp, end = 8.dp)
-                    )
-                    Text(
                         text = "${stringResource(id = R.string.price_label)} $%.2f".format(menuItem.price),
                         color = PrimaryGray,
                         fontSize = 18.sp,
                         fontWeight = FontWeight.Bold,
                         modifier = Modifier.padding(top = 8.dp, start = 16.dp, end = 16.dp)
+                    )
+                    Text(
+                        text = menuItem.description,
+                        color = PrimaryGray,
+                        fontSize = 18.sp,
+                        modifier = Modifier.padding(top = 8.dp, start = 16.dp, end = 8.dp)
+                    )
+                    Text(
+                        text = menuItem.category,
+                        color = PrimaryGray,
+                        fontSize = 18.sp,
+                        fontWeight = FontWeight.Bold,
+                        modifier = Modifier.padding(top = 8.dp, start = 16.dp, end = 8.dp)
                     )
                     AddOrRemoveItemComponent(onButtonsPressed = { quantity ->
                         total = menuItem.price * quantity
